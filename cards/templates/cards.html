@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<script src="https://unpkg.com/vue@3.0.11"></script>
+{% endblock %}
+{% block body %}
+<h1>Cards</h1>
+
+<div id="cards-vue">
+    <cards cards="{{ cards }}"></cards>
+</div>
+
+<ul>
+    {% for card in cards %}
+        <li>{{ card.term }} - {{ card.definition }}</li>
+    {% empty %}
+        <li>No cards.</li>
+    {% endfor %}
+</ul>
+
+<script src="{% static 'cards/js/cards.js' %}"></script>
+{% endblock body %}
