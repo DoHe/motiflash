@@ -1,3 +1,4 @@
+from django.core.serializers import serialize
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic import TemplateView
@@ -16,7 +17,10 @@ class Cards(TemplateView):
         context = super().get_context_data(**kwargs)
         course = self.request.GET.get("course")
         if course:
-            context['cards'] = Card.objects.filter(course=course).all()
+            context['cards'] = list(
+                Card.objects.filter(course=course).all().values()
+            )
+            context['course'] = Course.objects.get(id=course)
         return context
 
 
