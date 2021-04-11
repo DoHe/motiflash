@@ -2,19 +2,16 @@
 {% load static %}
 {% block head %}
 <script src="https://unpkg.com/vue@3.0.11"></script>
+<script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
 <link rel="stylesheet" href="{% static 'cards/css/cards.css' %}">
 {% endblock %}
 {% block body %}
-<section class="section">
-<div class="container">
-    <h1 class="title">
-        {{ course.name }}
-    </h1>
-    <div id="cards-vue">
-        <cards :cards="{{ cards }}"></cards>
-    </div>
+<h1 class="title">
+    {{ course.name }}
+</h1>
+<div id="cards-vue">
+    <cards :cards="{{ cards }}"></cards>
 </div>
-</section>
 
 <script src="{% static 'cards/js/cards.js' %}"></script>
 {% endblock body %}

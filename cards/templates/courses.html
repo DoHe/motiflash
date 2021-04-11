@@ -1,8 +1,19 @@
-<h1>Courses</h1>
+{% extends "base.html" %}
+{% block body %}
+<h1 class="title">
+    Courses
+</h1>
+
 <ul>
-    {% for course in courses %}
-        <li>{{ course.name }}</li>
-    {% empty %}
-        <li>No courses.</li>
-    {% endfor %}
-</ul>   
+{% for course in courses %}
+    <li>
+        <a href="/cards/?course={{ course.id }}">
+            {{ course.name }}
+        </a>
+    </li>
+{% empty %}
+    <li>No courses.</li>
+{% endfor %}
+</ul> 
+
+{% endblock body %}
