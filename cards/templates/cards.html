@@ -9,9 +9,10 @@
 <h1 class="title">
     {{ course.name }}
 </h1>
+
 <div id="cards-vue">
     <cards :cards="{{ cards }}"></cards>
 </div>
 
-<script src="{% static 'cards/js/cards.js' %}"></script>
+<script src="{% static 'cards/js/cards-vue.js' %}"></script>
 {% endblock body %}

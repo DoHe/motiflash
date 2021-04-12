@@ -79,4 +79,4 @@ app.component('cards',  {
     `,
 });
   
-app.mount('#cards-vue')
+app.mount('#cards-vue');
