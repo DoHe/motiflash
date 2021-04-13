@@ -13,7 +13,7 @@
     <ul>
     {% for course in courses %}
         <li>
-            <a href="/cards/?course={{ course.id }}">
+            <a href="{% url 'cards' %}?course={{ course.id }}">
                 {{ course.name }}
             </a>
         </li>
@@ -49,6 +49,9 @@
                     </div>
                 </div>
             {% endfor %}
+            <div class="control">
+                <button class="button is-primary">Submit</button>
+            </div>
         </form>
     </div>
   </div>

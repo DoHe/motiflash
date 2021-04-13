@@ -14,5 +14,11 @@
     <cards :cards="{{ cards }}"></cards>
 </div>
 
+<div class="block pt-6">
+    <a class="button" href="{% url 'cards_add' %}?course={{ request.GET.course }}">
+        Add more cards
+    </a>
+</div>
+
 <script src="{% static 'cards/js/cards-vue.js' %}"></script>
 {% endblock body %}

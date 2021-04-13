@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<script src="{% static 'cards/js/cards-add.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<h1 class="title">
+    Add more cards to "{{ course.name }}"
+</h1>
+
+<div class="box">
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="field">
+                {% if field.name != "course" %}
+                <label class="label">{{ field.label }}</label>
+                {% endif %}
+                <div class="control">
+                    <input
+                        class="input"
+                        name="{{ field.name }}"
+                        {% if field.name == "course" %}
+                        type="hidden"
+                        value="{{course.id}}"
+                        {% else %}
+                        type="{{ field.widget.input_type }}"
+                        {% endif %}
+                        placeholder="{{ field.widget.placeholder }}"
+                    >
+                    {% for error in field.errors %}
+                        <p class="help is-danger">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        {% if request.GET.success %}
+            <p class="help is-success">Successfully added "{{ request.GET.success }}"</p>
+        {% endif %}
+        <div class="control">
+            <button class="button is-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}
