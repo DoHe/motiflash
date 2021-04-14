@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
 from os import getenv
+from pathlib import Path
 
 import dj_database_url
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,12 +27,18 @@ SECRET_KEY = getenv(
 
 DEBUG = getenv("DEBUG", "False") == "True"
 
+sentry_sdk.init(
+    dsn=getenv("SENTRY_DSN"),
+    integrations=[DjangoIntegration()],
+    release=getenv("HEROKU_SLUG_COMMIT"),
+    debug=DEBUG
+)
 
 ALLOWED_HOSTS = []
 if DEBUG:
     ALLOWED_HOSTS.append("*")
 else:
-    ALLOWED_HOSTS.append("*")
+    ALLOWED_HOSTS.append("motiflash.herokuapp.com")
 
 
 # Application definition
