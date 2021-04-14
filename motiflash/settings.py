@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 if DEBUG:
     ALLOWED_HOSTS.append("*")
 else:
-    ALLOWED_HOSTS.append("motiflash.herokuapp.com")
+    ALLOWED_HOSTS.append("*")
 
 
 # Application definition
