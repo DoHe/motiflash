@@ -27,7 +27,9 @@ DEBUG = getenv("DEBUG", "False") == "True"
 
 
 ALLOWED_HOSTS = []
-if not DEBUG:
+if DEBUG:
+    ALLOWED_HOSTS.append("*")
+else:
     ALLOWED_HOSTS.append("motiflash.herokuapp.com")
 
 
