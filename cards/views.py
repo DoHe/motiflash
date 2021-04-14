@@ -69,6 +69,11 @@ class Courses(FormView):
         return context
 
     def form_valid(self, form):
+        import_text = form.cleaned_data.pop("import_text")
         course = Course(**form.cleaned_data)
         course.save()
+        if import_text:
+            for (term, definition) in import_text:
+                card = Card(term=term, definition=definition, course=course)
+                card.save()
         return super().form_valid(form)

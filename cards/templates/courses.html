@@ -31,18 +31,31 @@
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="box">
+        <div class="tabs">
+            <ul>
+                <li class="js-create-tab is-active"><a>Create</a></li>
+                <li class="js-import-tab"><a>Import</a></li>
+            </ul>
+        </div>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
-                <div class="field">
+                <div class="field {% if field.name == "import_text" %}is-hidden js-import-field{% endif %}">
                     <label class="label">{{ field.label }}</label>
                     <div class="control">
-                        <input
+                        {% if field.name == "import_text" %}
+                        <textarea
+                            class="textarea"
+                            name="{{ field.name }}"
+                        ></textarea>
+                        {% else %}
+                        <input 
                             class="input"
                             name="{{ field.name }}"
                             type="{{ field.widget.input_type }}"
                             placeholder="{{ field.widget.placeholder }}"
                         >
+                        {% endif %}
                         {% for error in field.errors %}
                             <p class="help is-danger">{{ error }}</p>
                         {% endfor %}
