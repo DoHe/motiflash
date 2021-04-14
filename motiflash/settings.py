@@ -11,23 +11,24 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from os import getenv
 
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = getenv(
+    "SECRET_KEY",
+    '=z=-h-d6@n%(&)@e1vf+fg*==c_f@-p(4^ixq*46j7dr(1$p74'
+)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+DEBUG = getenv("DEBUG", "False") == "True"
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=z=-h-d6@n%(&)@e1vf+fg*==c_f@-p(4^ixq*46j7dr(1$p74'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS.append("motiflash.herokuapp.com")
 
 
 # Application definition
