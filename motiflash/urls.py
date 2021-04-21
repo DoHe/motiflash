@@ -5,5 +5,6 @@ from cards.views import Index, Cards
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cards.urls'))
+    path('', include('cards.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

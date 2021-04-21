@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic import TemplateView, FormView
 from django.shortcuts import redirect, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from cards.models import Card, Course
 from cards.forms import CourseForm, CardForm
@@ -12,7 +13,7 @@ class Index(TemplateView):
     template_name = "index.html"
 
 
-class Cards(TemplateView):
+class Cards(LoginRequiredMixin, TemplateView):
     template_name = "cards.html"
 
     def get(self, request):
@@ -35,7 +36,7 @@ class Cards(TemplateView):
         return context
 
 
-class CardAddView(FormView):
+class CardAddView(LoginRequiredMixin, FormView):
     template_name = "card_add.html"
     form_class = CardForm
 
@@ -58,7 +59,7 @@ class CardAddView(FormView):
         return f'.?{params.urlencode()}'
 
 
-class Courses(FormView):
+class Courses(LoginRequiredMixin, FormView):
     template_name = "courses.html"
     form_class = CourseForm
     success_url = '.'
