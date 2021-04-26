@@ -2,7 +2,7 @@
 {% load static %}
 {% block head %}
 <script src="https://unpkg.com/vue@3.0.11"></script>
-<script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 <link rel="stylesheet" href="{% static 'cards/css/cards.css' %}">
 {% endblock %}
 {% block body %}
@@ -15,12 +15,14 @@
 </div>
 
 <div class="block pt-6">
-    <a class="button" href="{% url 'cards_add' %}?course={{ request.GET.course }}">
-        Add more cards
-    </a>
-    <a class="button" href="{% url 'share' %}?course={{ request.GET.course }}">
-        Share
-    </a>
+    <div class="buttons is-centered">
+        <a class="button" href="{% url 'cards_add' %}?course={{ request.GET.course }}">
+            Add more cards
+        </a>
+        <a class="button" href="{% url 'share' %}?course={{ request.GET.course }}">
+            Share
+        </a>
+    </div>
 </div>
 
 <script src="{% static 'cards/js/cards-vue.js' %}"></script>

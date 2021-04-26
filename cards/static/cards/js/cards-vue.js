@@ -14,6 +14,8 @@ app.component('cards',  {
         front: true,
         correctCount: 0,
         courseDone: false,
+        progressColor: 'is-primary',
+        confetti: null,
       }
     },
     props: {
@@ -32,8 +34,16 @@ app.component('cards',  {
         }
       },
       showScore(){
+        if (this.correctCount / this.cards.length > 0.8) {
+          this.progressColor = 'is-success';
+          this.confetti = window.confetti({
+            particleCount: 500,
+            spread: 500,
+          });
+        } else {
+          this.progressColor = 'is-danger';
+        }
         this.courseDone = true;
-        window.confetti.start(5000);
       },
       reset(){
         shuffleArray(this.cards);
@@ -41,12 +51,20 @@ app.component('cards',  {
         this.correctCount = 0;
         this.front = true;
         this.courseDone = false;
-        window.confetti.stop();
+        if (this.confetti) {
+          this.confetti.reset();
+        }
       }
     },
     computed: {
       card(){
         return this.cards[this.cardIndex];
+      },
+      progress(){
+        if (this.courseDone) {
+          return 1;
+        }
+        return this.cardIndex / this.cards.length;
       }
     },
     template: `
@@ -73,6 +91,10 @@ app.component('cards',  {
           <button v-if="courseDone" @click="reset" class=button is-primary>
           🔀
           </button>
+        </div>
+
+        <div class="block">
+          <progress class="progress" :class="progressColor" :value="progress" max="1">{{ value }}%</progress>
         </div>
       </div>
     </div>

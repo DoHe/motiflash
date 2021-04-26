@@ -6,7 +6,7 @@
 
 {% block body %}
 <h1 class="title">
-    Add more cards to "{{ course.name }}"
+    Add more cards to "<a href="{% url 'cards' %}?course={{ request.GET.course }}">{{ course.name }}</a>"
 </h1>
 
 <div class="box">
