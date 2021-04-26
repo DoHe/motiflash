@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load form_helper %}
+{% block body %}
+<h1 class="title">
+    Share
+</h1>
+
+<form method="post">
+{% csrf_token %}
+    <div class="field">
+        <label class="label">{{ form.user.label }}</label>
+        <div class="control">
+            <div class="select is-multiple">
+                {{ form.user }}
+            </div>
+        </div>
+        {% for error in form.user.errors %}
+            <p class="help is-danger">{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% for error in form.non_field_errors %}
+        <p class="help is-danger">Error: {{ error }}</p>
+    {% endfor %}
+    <div class="control">
+        <button class="button is-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}

@@ -1,6 +1,7 @@
 from django import forms
+from django.contrib.auth.models import User
 
-from cards.models import Course, Card
+from cards.models import Card, Course
 from cards.utils import parse_export
 
 
@@ -12,7 +13,7 @@ class CourseForm(forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = '__all__'
+        exclude = ["owner", "access"]
 
     def clean_name(self):
         name = self.cleaned_data['name']
@@ -46,3 +47,13 @@ class CardForm(forms.ModelForm):
     class Meta:
         model = Card
         fields = '__all__'
+
+
+class ShareForm(forms.Form):
+    user = forms.MultipleChoiceField(
+        label='Users to share with',
+        choices=(
+            (user.id, user.username)
+            for user in User.objects.all()
+        ),
+    )

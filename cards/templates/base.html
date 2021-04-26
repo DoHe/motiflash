@@ -26,6 +26,7 @@
     <meta name="msapplication-TileImage" content="{% static '/ms-icon-144x144.png' %}">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/76257225dd.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'cards/css/base.css' %}">
     <script src="{% static 'cards/js/base.js' %}"></script>
     {% block head %}
@@ -48,13 +49,26 @@
 
   <div id="cardsNavbar" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'courses' %}">
+      {% url 'courses' as courses_url %}
+      <a
+        class="navbar-item is-tab {% if request.get_full_path == courses_url %}is-active{% endif %}"
+        href="{% url 'courses' %}"
+      >
         Courses
       </a>
+    </div>
 
-      <a class="navbar-item">
-        Whatevs
-      </a>
+    <div class="navbar-end">
+      {% if user.is_authenticated %}
+        <a class="navbar-item" href="{% url 'logout' %}">
+          {{ user.username }} (Log out)
+        </a>
+      {% else %}
+        <a class="navbar-item" href="{% url 'login' %}">
+          Log in
+        </a>
+      {% endif %}
+    </div>
   </div>
 </nav>
 

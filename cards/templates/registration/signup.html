@@ -2,13 +2,13 @@
 {% load form_helper %}
 {% block body %}
 <h1 class="title">
-    Log in
+    Sign up
 </h1>
 <div class="block">
 {% nice_form form %}
 </div>
 
 <div class="block">
-    <a href="{% url 'signup' %}">Or sign up</a>
+    <a href="{% url 'login' %}">Or log in</a>
 </div>
 {% endblock %}

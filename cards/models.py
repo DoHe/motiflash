@@ -4,8 +4,15 @@ from django.contrib.auth.models import User
 
 class Course(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    # owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    # access = models.ManyToManyField(User)
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='owning_user'
+    )
+    access = models.ManyToManyField(
+        User,
+        related_name='allowed_user'
+    )
 
 
 class Card(models.Model):

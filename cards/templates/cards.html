@@ -18,6 +18,9 @@
     <a class="button" href="{% url 'cards_add' %}?course={{ request.GET.course }}">
         Add more cards
     </a>
+    <a class="button" href="{% url 'share' %}?course={{ request.GET.course }}">
+        Share
+    </a>
 </div>
 
 <script src="{% static 'cards/js/cards-vue.js' %}"></script>

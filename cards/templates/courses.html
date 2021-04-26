@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load form_helper %}
 {% block head %}
 <script src="{% static 'cards/js/courses.js' %}"></script>
 {% endblock %}
@@ -13,9 +14,14 @@
     <ul>
     {% for course in courses %}
         <li>
-            <a href="{% url 'cards' %}?course={{ course.id }}">
-                {{ course.name }}
-            </a>
+            <span class="icon-text">
+                <a href="{% url 'cards' %}?course={{ course.id }}">
+                    {{ course.name }}
+                </a>
+                <a href="{% url 'share' %}?course={{ course.id }}" class="icon">
+                    <i class="fas fa-share"></i>
+                </a>
+            </span>
         </li>
     {% endfor %}
     </ul>
@@ -37,35 +43,9 @@
                 <li class="js-import-tab"><a>Import</a></li>
             </ul>
         </div>
-        <form method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="field {% if field.name == "import_text" %}is-hidden js-import-field{% endif %}">
-                    <label class="label">{{ field.label }}</label>
-                    <div class="control">
-                        {% if field.name == "import_text" %}
-                        <textarea
-                            class="textarea"
-                            name="{{ field.name }}"
-                        ></textarea>
-                        {% else %}
-                        <input 
-                            class="input"
-                            name="{{ field.name }}"
-                            type="{{ field.widget.input_type }}"
-                            placeholder="{{ field.widget.placeholder }}"
-                        >
-                        {% endif %}
-                        {% for error in field.errors %}
-                            <p class="help is-danger">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-            <div class="control">
-                <button class="button is-primary">Submit</button>
-            </div>
-        </form>
+        {% with extra_classes='{"import_text":"is-hidden js-import-field"}' custom_inputs='{"import_text":"textarea"}' %}
+        {% nice_form form=form extra_classes=extra_classes custom_inputs=custom_inputs %}
+        {% endwith %}
     </div>
   </div>
   <button class="modal-close is-large" aria-label="close"></button>

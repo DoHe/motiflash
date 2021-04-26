@@ -1,28 +1,37 @@
 {% load dict_helper %}
-<form method="{{ action }}">
+<form method="{{ method }}">
     {% csrf_token %}
     {% for field in form %}
-        <div class="field">
+        <div class="field {% if field.name in extra_classes %}{% get_value extra_classes field.name %}{% endif %}">
             {% if not field.name in hidden %}
             <label class="label">{{ field.label }}</label>
             {% endif %}
             <div class="control">
+                {% if field.name in custom_inputs %}
+                <{% get_value custom_inputs field.name %}
+                    class="{% get_value custom_inputs field.name %}"
+                    name="{{ field.name }}"
+                ></{% get_value custom_inputs field.name %}>
+                {% else %}
                 <input
                     class="input"
                     name="{{ field.name }}"
                     {% if field.name in hidden %}
-                    type="hidden"
-                    value="{% get_value hidden field.name %}"
+                        type="hidden"
+                        value="{% get_value hidden field.name %}"
                     {% else %}
-                    {% if field.name == "password" %}
-                    type="password"
-                    {% else %}
-                    type="{{ field.widget.input_type }}"
-                    {% endif %}
-                    value="{{ field.value }}"
+                        {% if "password" in field.name %}
+                            type="password"
+                        {% else %}
+                            type="{{ field.widget.input_type }}"
+                        {% endif %}
+                        {% if field.value != None %}
+                            value="{{ field.value }}"
+                        {% endif %}
                     {% endif %}
                     placeholder="{{ field.widget.placeholder }}"
                 >
+                {% endif %}
                 {% for error in field.errors %}
                     <p class="help is-danger">{{ error }}</p>
                 {% endfor %}
