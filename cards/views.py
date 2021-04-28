@@ -2,15 +2,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.serializers import serialize
-from django.db.models import Q
 from django.http import JsonResponse
+from django.db.models import Q
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, FormView, TemplateView
 
 from cards.forms import CardForm, CourseForm, ShareForm
-from cards.models import Card, Course
+from cards.models import Card, Course, Notifications
 
 
 class Index(TemplateView):
@@ -111,3 +111,13 @@ class ShareView(LoginRequiredMixin, FormView):
             course.access.add(user)
         course.save()
         return super().form_valid(form)
+
+
+class NotificationsView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        notifications = Notifications.objects.filter(receiver=request.user)
+        return JsonResponse(
+            list(notifications.values()),
+            safe=False
+        )

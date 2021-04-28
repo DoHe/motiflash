@@ -36,23 +36,38 @@ function initNotifications() {
   });
 }
 
-function checkNotifications() {
-  fetch('/notifications')
+async function checkNotifications() {
+  const response =  await fetch('/notifications');
+  let notifications = [];
+  try {
+    notifications = await response.json();
+  } catch (error) {
+    return;
+  }
+  notifications.forEach(
+    n => showNotification(n)
+  );
 }
 
-function showNotification(text) {
+function showNotification({ title, text, id }) {
   const template = document.createElement('template');
-  template.innerHTML = `<div class="notification is-primary is-light">
-    <button class="delete js-delete"></button>
-    ${text}
-  </div>`
-  const notification = template.content.firstChild;
-  notification.querySelector('.js-delete').addEventListener('click', () => {
-    notification.parentNode.removeChild(notification);
+  template.innerHTML = `<article class="message is-primary">
+    <div class="message-header">
+      <p>${title}</p>
+      <button class="delete js-delete"></button>
+    </div>
+    <div class="message-body">
+      ${text}
+    </div>
+  </article>`
+  const $notification = template.content.firstChild;
+  $notification.querySelector('.js-delete').addEventListener('click', () => {
+    $notification.parentNode.removeChild($notification);
+    await fetch('/notifications'); // TODO: mark read
   })
   const notificationArea = document.querySelector('.js-achievement');
   if (notificationArea) {
-    notificationArea.appendChild(notification);
+    notificationArea.appendChild($notification);
   }
 }
 
@@ -61,4 +76,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initModal();
     initNotifications();
     window.showNotification = showNotification;
+    checkNotifications();
 });

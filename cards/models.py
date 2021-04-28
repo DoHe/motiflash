@@ -19,3 +19,22 @@ class Card(models.Model):
     term = models.TextField()
     definition = models.TextField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+
+class Notifications(models.Model):
+    title = models.CharField(max_length=100)
+    text = models.TextField()
+    receiver = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+
+class Achievement(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    icon = models.CharField(max_length=100)
+    achieved = models.ManyToManyField(
+        User,
+        related_name='achieving_user'
+    )
