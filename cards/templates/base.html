@@ -78,6 +78,16 @@
     {% endblock body %}
 </section>
 </div>
+
+<div class="achievement js-achievement">
+{% for notification in notifications %}
+  <div class="notification is-primary is-light">
+    <button class="delete js-delete"></button>
+    {{ notification }}
+  </div>
+{% endfor %}
+</div>
+
 </body>
 
 </html>
