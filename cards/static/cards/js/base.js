@@ -63,7 +63,7 @@ function showNotification({ title, text, id }) {
   const $notification = template.content.firstChild;
   $notification.querySelector('.js-delete').addEventListener('click', () => {
     $notification.parentNode.removeChild($notification);
-    await fetch('/notifications'); // TODO: mark read
+    fetch(`/notifications/read?id=${id}`);
   })
   const notificationArea = document.querySelector('.js-achievement');
   if (notificationArea) {

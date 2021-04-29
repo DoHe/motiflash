@@ -38,3 +38,20 @@ class Achievement(models.Model):
         User,
         related_name='achieving_user'
     )
+
+
+class SiteAchievement(Achievement):
+    path = models.CharField(max_length=100)
+
+
+class LevelAchievement(Achievement):
+    level = models.IntegerField(null=False)
+
+    def save(self, *args, **kwargs):
+        if not self.icon:
+            self.icon = 'level_up'
+        if not self.description:
+            self.description = f"You reached level {self.level}!"
+        if not self.title:
+            self.title = f'Reached level {self.level}'
+        super().save(*args, **kwargs)

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+<h1 class="title">
+    Achievements
+</h1>
+
+<section class="section">
+    <h1 class="title">Levels</h1>
+    <div class="is-flex is-flex-wrap-wrap">
+        {% for achievement in level_achievements %}
+            <div class="card m-2">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-4">{{ achievement.title }}</p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                    {{ achievement.description }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock body %}

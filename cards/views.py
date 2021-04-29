@@ -1,20 +1,29 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.core.serializers import serialize
-from django.http import JsonResponse
 from django.db.models import Q
+from django.http import JsonResponse
 from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, FormView, TemplateView
 
 from cards.forms import CardForm, CourseForm, ShareForm
-from cards.models import Card, Course, Notifications
+from cards.models import Card, Course, Notifications, LevelAchievement, SiteAchievement
 
 
 class Index(TemplateView):
     template_name = "index.html"
+
+
+class AchievementsView(LoginRequiredMixin, TemplateView):
+    template_name = "achievements.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['level_achievements'] = LevelAchievement.objects.all()
+        context['site_achievements'] = SiteAchievement.objects.all()
+        return context
 
 
 class Cards(LoginRequiredMixin, TemplateView):
@@ -121,3 +130,17 @@ class NotificationsView(LoginRequiredMixin, View):
             list(notifications.values()),
             safe=False
         )
+
+
+class NotificationReadView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        status = "ok"
+        try:
+            notification_id = request.GET.get('id')
+            Notifications.objects.get(id=notification_id).delete()
+        except:
+            status = "failed"
+        return JsonResponse({
+            "status": status
+        })

@@ -14,7 +14,7 @@ app.component('cards',  {
         front: true,
         correctCount: 0,
         courseDone: false,
-        progressColor: 'is-primary',
+        progressColor: '',
         confetti: null,
       }
     },
@@ -51,6 +51,7 @@ app.component('cards',  {
         this.correctCount = 0;
         this.front = true;
         this.courseDone = false;
+        this.progressColor = '';
         if (this.confetti) {
           this.confetti.reset();
         }
