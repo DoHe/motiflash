@@ -11,7 +11,7 @@
 </h1>
 
 <div id="cards-vue">
-    <cards :cards="{{ cards }}"></cards>
+    <cards :cards="{{ cards }}" :courseId="{{ request.GET.course }}"></cards>
 </div>
 
 <div class="block pt-6">

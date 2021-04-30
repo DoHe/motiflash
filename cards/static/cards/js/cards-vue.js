@@ -20,6 +20,7 @@ app.component('cards',  {
     },
     props: {
         cards: Array,
+        courseId: String,
     },
     methods: {
       answer(correct){
@@ -44,6 +45,7 @@ app.component('cards',  {
           this.progressColor = 'is-danger';
         }
         this.courseDone = true;
+        fetch(`/course_done?id=${this.courseId}`)
       },
       reset(){
         shuffleArray(this.cards);

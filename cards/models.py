@@ -55,3 +55,8 @@ class LevelAchievement(Achievement):
         if not self.title:
             self.title = f'Reached level {self.level}'
         super().save(*args, **kwargs)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    experience_points = models.IntegerField()

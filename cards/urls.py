@@ -1,29 +1,62 @@
 from django.urls import path
 
 from cards.views import (
-    AchievementsView,
-    Index,
-    Cards,
-    Courses,
-    CardAddView,
-    SignUpView,
-    ShareView,
-    NotificationsView,
-    NotificationReadView
+    misc,
+    notifications,
+    cards,
+    courses,
+    profile
 )
 
 urlpatterns = [
-    path('', Index.as_view(), name='index'),
-    path('cards/', Cards.as_view(), name='cards'),
-    path('courses/', Courses.as_view(), name='courses'),
-    path('cards_add/', CardAddView.as_view(), name='cards_add'),
-    path('share/', ShareView.as_view(), name='share'),
-    path('notifications/', NotificationsView.as_view(), name='notifications'),
-    path('achievements/', AchievementsView.as_view(), name='achievements'),
+    path(
+        '',
+        misc.Index.as_view(),
+        name='index'
+    ),
+    path(
+        'cards/',
+        cards.Cards.as_view(),
+        name='cards'
+    ),
+    path(
+        'cards_add/',
+        cards.CardAddView.as_view(),
+        name='cards_add'
+    ),
+    path(
+        'courses/',
+        courses.Courses.as_view(),
+        name='courses'
+    ),
+    path(
+        'share/',
+        courses.ShareView.as_view(),
+        name='share'
+    ),
+    path(
+        'notifications/',
+        notifications.NotificationsView.as_view(),
+        name='notifications'
+    ),
     path(
         'notifications/read',
-        NotificationReadView.as_view(),
+        notifications.NotificationReadView.as_view(),
         name='notification_read'
     ),
-    path('accounts/signup/', SignUpView.as_view(), name='signup'),
+    path(
+        'achievements/',
+        profile.AchievementsView.as_view(),
+        name='achievements'
+    ),
+    path(
+        'profile/',
+        profile.ProfileView.as_view(),
+        name='profile'
+    ),
+    path(
+        'accounts/signup/',
+        profile.SignUpView.as_view(),
+        name='signup'
+    ),
 ]

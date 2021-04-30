@@ -1,32 +1,35 @@
 {% extends "base.html" %}
+{% load static %}
+{% load achievements_helper %}
 {% block body %}
 <h1 class="title">
     Achievements
 </h1>
 
-<section class="section">
-    <h1 class="title">Levels</h1>
-    <div class="is-flex is-flex-wrap-wrap">
-        {% for achievement in level_achievements %}
-            <div class="card m-2">
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-left">
-                            <figure class="image is-48x48">
-                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                            </figure>
-                        </div>
-                        <div class="media-content">
-                            <p class="title is-4">{{ achievement.title }}</p>
-                        </div>
+<h1 class="title">Levels</h1>
+<div class="is-flex is-flex-wrap-wrap">
+    {% for achievement in level_achievements %}
+        <div class="card is-flex-shrink-0 m-2">
+            {% achievement_achieved achievement user as achieved %}
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                        <img src="{% achievement_icon achievement user %}" alt="Arrow up">
+                        </figure>
                     </div>
-
-                    <div class="content">
-                    {{ achievement.description }}
+                    <div class="media-content">
+                        <p class="title is-4 {% if not achieved %}has-text-grey-light{% endif %}">
+                            {{ achievement.title }}
+                        </p>
                     </div>
                 </div>
+
+                <div class="content {% if not achieved %}has-text-grey-light{% endif %}">
+                    {{ achievement.description }}
+                </div>
             </div>
-        {% endfor %}
-    </div>
-</section>
+        </div>
+    {% endfor %}
+</div>
 {% endblock body %}
