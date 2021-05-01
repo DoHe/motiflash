@@ -7,4 +7,7 @@
 <a href="{% url 'achievements' %}">
 Achievements
 </a>
+
+<p>EXP: {{ user.profile.experience_points }}</p>
+<p>Level: {{ user.profile.level }}</p>
 {% endblock body %}

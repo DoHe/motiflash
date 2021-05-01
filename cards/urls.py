@@ -55,6 +55,11 @@ urlpatterns = [
         name='profile'
     ),
     path(
+        'points/',
+        profile.PointsView.as_view(),
+        name='points'
+    ),
+    path(
         'accounts/signup/',
         profile.SignUpView.as_view(),
         name='signup'

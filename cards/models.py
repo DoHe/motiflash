@@ -59,4 +59,5 @@ class LevelAchievement(Achievement):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    experience_points = models.IntegerField()
+    experience_points = models.IntegerField(default=0)
+    level = models.IntegerField(default=1)

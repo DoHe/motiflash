@@ -60,15 +60,12 @@
 
     <div class="navbar-end">
       {% if user.is_authenticated %}
-        <div class="navbar-item">
-          <a href="{% url 'profile' %}">
-            {{ user.username }}
-          </a>
-          &nbsp;
-          <a href="{% url 'logout' %}">
-            (Log out)
-          </a>
-        </div>
+        <a class="navbar-item" href="{% url 'profile' %}">
+          {{ user.username }} ({{ user.profile.level }})
+        </a>
+        <a class="navbar-item" href="{% url 'logout' %}">
+          Log out
+        </a>
       {% else %}
         <a class="navbar-item" href="{% url 'login' %}">
           Log in
