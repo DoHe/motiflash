@@ -26,6 +26,7 @@ app.component('cards',  {
       answer(correct){
         if (correct) {
           this.correctCount+=1;
+          this.givePoints('card_correct');
         }
         if (this.cardIndex < this.cards.length - 1) {
           this.cardIndex+=1;
@@ -36,16 +37,21 @@ app.component('cards',  {
       },
       showScore(){
         if (this.correctCount / this.cards.length > 0.8) {
+          if (this.correctCount == this.cards.length) {
+            this.givePoints('course_perfect');
+          } else {
+            this.givePoints('course_finished');
+          }
           this.progressColor = 'is-success';
-          this.confetti = window.confetti({
+          window.confetti({
             particleCount: 500,
             spread: 500,
           });
         } else {
           this.progressColor = 'is-danger';
+          this.givePoints('course_finished');
         }
         this.courseDone = true;
-        fetch(`/course_done?id=${this.courseId}`)
       },
       reset(){
         shuffleArray(this.cards);
@@ -54,9 +60,10 @@ app.component('cards',  {
         this.front = true;
         this.courseDone = false;
         this.progressColor = '';
-        if (this.confetti) {
-          this.confetti.reset();
-        }
+        window.confetti.reset();
+      },
+      givePoints(reason){
+        fetch(`/points?id=${this.courseId}&reason=${reason}`)
       }
     },
     computed: {

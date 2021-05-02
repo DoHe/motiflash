@@ -1,3 +1,5 @@
+import math
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -12,14 +14,20 @@ from cards.models import LevelAchievement, Profile, SiteAchievement
 POINTS = {
     'card_correct': 1,
     'course_finished': 10,
-    'course_mostly_correct': 20,
-    'course_perfect': 30,
+    'course_perfect': 20,
 }
 
-LEVELS = [
-    (0, 1),
-    (100, 2),
-    (200, 3)
+LEVEL_EXPONENT = 1.4
+LEVEL_BASE = 100
+
+
+def generate_levels(level):
+    return math.floor(LEVEL_BASE * (level ** LEVEL_EXPONENT))
+
+
+LEVEL_BREAK_POINTS = [
+    generate_levels(i)
+    for i in range(100)
 ]
 
 
@@ -43,6 +51,18 @@ class SignUpView(CreateView):
     template_name = 'registration/signup.html'
 
 
+def level_for_points(points):
+    for idx in range(len(LEVEL_BREAK_POINTS)):
+        next_idx = idx + 1
+        if next_idx == len(LEVEL_BREAK_POINTS):
+            return next_idx
+
+        next_points = LEVEL_BREAK_POINTS[next_idx]
+        if points < next_points:
+            return next_idx
+    return -1
+
+
 class PointsView(LoginRequiredMixin, View):
 
     def get(self, request):
@@ -52,15 +72,14 @@ class PointsView(LoginRequiredMixin, View):
         response = {"status": "ok", "points": points}
         if points:
             new_points = request.user.profile.experience_points + points
-            print(new_points)
             request.user.profile.experience_points = new_points
-            level = 0
-            for idx, (needed_points, level) in enumerate(LEVELS):  # TODO: Fix logic
-                if needed_points > new_points:
-                    level = LEVELS[idx-1][1]
-            request.user.profile.level = level
+            new_level = level_for_points(new_points)
+            request.user.profile.level = new_level
             request.user.profile.save()
-
+            for achievement in LevelAchievement.objects.all():
+                if new_level == achievement.level:
+                    achievement.achieved.add(request.user)
+                    achievement.save()
         else:
             response["status"] = "error"
 
