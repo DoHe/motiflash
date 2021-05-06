@@ -44,10 +44,7 @@ class ShareView(LoginRequiredMixin, FormView):
         course = Course.objects.get(
             id=self.request.GET.get('course')
         )
-        for user_id in form.cleaned_data.get("user", []):
-            user = User.objects.get(
-                id=user_id
-            )
+        for user in form.cleaned_data.get("user", []):
             course.access.add(user)
         course.save()
         return super().form_valid(form)

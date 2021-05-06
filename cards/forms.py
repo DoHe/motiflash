@@ -50,10 +50,7 @@ class CardForm(forms.ModelForm):
 
 
 class ShareForm(forms.Form):
-    user = forms.MultipleChoiceField(
+    user = forms.ModelMultipleChoiceField(
         label='Users to share with',
-        choices=(
-            (user.id, user.username)
-            for user in User.objects.all()
-        ),
+        queryset=User.objects.all()
     )
