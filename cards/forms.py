@@ -49,6 +49,13 @@ class CardForm(forms.ModelForm):
         fields = '__all__'
 
 
+CardFormSet = forms.modelformset_factory(
+    Card,
+    exclude=('course', ),
+    extra=0
+)
+
+
 class ShareForm(forms.Form):
     user = forms.ModelMultipleChoiceField(
         label='Users to share with',

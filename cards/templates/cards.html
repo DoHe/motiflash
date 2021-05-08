@@ -19,6 +19,9 @@
         <a class="button" href="{% url 'cards_add' %}?course={{ request.GET.course }}">
             Add more cards
         </a>
+        <a class="button" href="{% url 'cards_edit' %}?course={{ request.GET.course }}">
+            Edit
+        </a>
         <a class="button" href="{% url 'share' %}?course={{ request.GET.course }}">
             Share
         </a>

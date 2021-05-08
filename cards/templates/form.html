@@ -18,7 +18,12 @@
                     name="{{ field.name }}"
                     {% if field.name in hidden %}
                         type="hidden"
-                        value="{% get_value hidden field.name %}"
+                        {% get_value hidden field.name as custom_value %}
+                        {% if custom_value %}
+                            value="{% get_value hidden field.name %}"
+                        {% else %}
+                            value="{{ field.value }}"
+                        {% endif %}
                     {% else %}
                         {% if "password" in field.name %}
                             type="password"
@@ -44,7 +49,9 @@
     {% for error in form.non_field_errors %}
         <p class="help is-danger">Error: {{ error }}</p>
     {% endfor %}
+    {% if button %}
     <div class="control">
         <button class="button is-primary">Submit</button>
     </div>
+    {% endif %}
 </form>

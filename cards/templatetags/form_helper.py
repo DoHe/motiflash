@@ -12,6 +12,7 @@ def nice_form(
     hidden='{}',
     extra_classes='{}',
     custom_inputs='{}',
+    button=True,
 ):
     hidden = json.loads(hidden)
     extra_classes = json.loads(extra_classes)
@@ -22,4 +23,5 @@ def nice_form(
         'hidden': hidden,
         'extra_classes': extra_classes,
         'custom_inputs': custom_inputs,
+        'button': button,
     }

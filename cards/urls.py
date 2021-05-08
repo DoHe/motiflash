@@ -25,6 +25,11 @@ urlpatterns = [
         name='cards_add'
     ),
     path(
+        'cards_edit/',
+        cards.CardEditView.as_view(),
+        name='cards_edit'
+    ),
+    path(
         'courses/',
         courses.Courses.as_view(),
         name='courses'

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% load form_helper %}
+
+{% block body %}
+<h1 class="title">
+    Edit cards for "<a href="{% url 'cards' %}?course={{ request.GET.course }}">{{ course.name }}</a>"
+</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {% for form in formset %}
+        <div class="box m-4">
+            {% nice_form form=form button=False hidden='{ "id": "" }' %}
+        </div>
+    {% endfor %}
+    <div class="control">
+        <button class="button is-primary">Submit</button>
+    </div>
+</form>
+
+{% endblock body %}
