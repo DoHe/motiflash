@@ -63,16 +63,10 @@ class CardEditView(LoginRequiredMixin, TemplateView):
         context['formset'] = CardFormSet(
             queryset=Card.objects.filter(course=context['course'])
         )
-        print(context['formset'])
         return context
 
-    def form_valid(self, form):
-        card = Card(**form.cleaned_data)
-        card.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        params = self.request.GET.copy()
-        form = self.get_form()
-        params['success'] = form['term'].value()
-        return f'.?{params.urlencode()}'
+    def post(self, request):
+        formset = CardFormSet(request.POST, request.FILES)
+        if formset.is_valid():
+            print(formset.save())
+        return self.get(request)

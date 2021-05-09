@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load form_helper %}
+{% load bulma_tags %}
 
 {% block body %}
 <h1 class="title">
@@ -9,13 +9,14 @@
 
 <form method="post">
     {% csrf_token %}
+    {{  formset.management_form }}
     {% for form in formset %}
         <div class="box m-4">
-            {% nice_form form=form button=False hidden='{ "id": "" }' %}
+            {{ form|bulma }}
         </div>
     {% endfor %}
     <div class="control">
-        <button class="button is-primary">Submit</button>
+        <button class="button is-primary">Save</button>
     </div>
 </form>
 

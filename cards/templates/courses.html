@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load form_helper %}
+{% load bulma_tags %}
 {% block head %}
 <script src="{% static 'cards/js/courses.js' %}"></script>
 {% endblock %}
@@ -17,6 +17,12 @@
             <span class="icon-text">
                 <a href="{% url 'cards' %}?course={{ course.id }}">
                     {{ course.name }}
+                </a>
+                <a href="{% url 'cards_add' %}?course={{ course.id }}" class="icon">
+                    <i class="fas fa-plus"></i>
+                </a>
+                <a href="{% url 'cards_edit' %}?course={{ course.id }}" class="icon">
+                    <i class="fas fa-edit"></i>
                 </a>
                 <a href="{% url 'share' %}?course={{ course.id }}" class="icon">
                     <i class="fas fa-share"></i>
@@ -43,9 +49,13 @@
                 <li class="js-import-tab"><a>Import</a></li>
             </ul>
         </div>
-        {% with extra_classes='{"import_text":"is-hidden js-import-field"}' custom_inputs='{"import_text":"textarea"}' %}
-        {% nice_form form=form extra_classes=extra_classes custom_inputs=custom_inputs %}
-        {% endwith %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|bulma }}
+            <div class="field">
+                <button type="submit" class="button is-primary">Add</button>
+            </div>
+        </form>
     </div>
   </div>
   <button class="modal-close is-large" aria-label="close"></button>

@@ -7,7 +7,8 @@ function initAddModal() {
 function initAddModalTabs() {
     const importTab = document.querySelector('.js-import-tab');
     const createTab = document.querySelector('.js-create-tab');
-    const importField = document.querySelector('.js-import-field');
+    const importField = document.querySelector('#id_import_text').closest('.field');
+    importField.classList.add('is-hidden');
     
     importTab.addEventListener('click', () => {
         importTab.classList.add('is-active');

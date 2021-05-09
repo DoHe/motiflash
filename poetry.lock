@@ -97,6 +97,17 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-bulma"
+version = "0.8.2"
+description = "Bulma CSS Framework for Django projects"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+django = ">=2.2"
+
+[[package]]
 name = "django-stubs"
 version = "1.8.0"
 description = "Mypy stubs for Django"
@@ -437,7 +448,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "3.9.4"
-content-hash = "1b60b3e17269e45fdc72b0c7fdfe18a074ef515866dcb5cdd6d35b3768f5a658"
+content-hash = "8582768592d64ca56715d5eab27cf9a6557fb1ba67fdf666945118adb2c19293"
 
 [metadata.files]
 asgiref = [
@@ -475,6 +486,10 @@ dj-database-url = [
 django = [
     {file = "Django-3.2-py3-none-any.whl", hash = "sha256:0604e84c4fb698a5e53e5857b5aea945b2f19a18f25f10b8748dbdf935788927"},
     {file = "Django-3.2.tar.gz", hash = "sha256:21f0f9643722675976004eb683c55d33c05486f94506672df3d6a141546f389d"},
+]
+django-bulma = [
+    {file = "django-bulma-0.8.2.tar.gz", hash = "sha256:779e23c2b7fe59d7d67b7d9f86c2e097a3128a910331fb78e71f2f93841f7a3a"},
+    {file = "django_bulma-0.8.2-py3-none-any.whl", hash = "sha256:7c682a0f9e15491f9cbebc8867d1d0592e660804962b4ca35bf550731df01321"},
 ]
 django-stubs = [
     {file = "django-stubs-1.8.0.tar.gz", hash = "sha256:717967d7fee0a6af0746724a0be80d72831a982a40fa8f245a6a46f4cafd157b"},

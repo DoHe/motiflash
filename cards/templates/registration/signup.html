@@ -1,11 +1,18 @@
 {% extends "base.html" %}
-{% load form_helper %}
+{% load bulma_tags %}
 {% block body %}
 <h1 class="title">
     Sign up
 </h1>
+
 <div class="block">
-{% nice_form form %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form|bulma }}
+        <div class="field">
+            <button type="submit" class="button is-primary">Sign up</button>
+        </div>
+    </form>
 </div>
 
 <div class="block">

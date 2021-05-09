@@ -52,6 +52,7 @@ class CardForm(forms.ModelForm):
 CardFormSet = forms.modelformset_factory(
     Card,
     exclude=('course', ),
+    can_delete=True,
     extra=0
 )
 
