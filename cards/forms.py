@@ -46,7 +46,7 @@ class CardForm(forms.ModelForm):
 
     class Meta:
         model = Card
-        fields = '__all__'
+        fields = ['definition', 'term']
 
 
 CardFormSet = forms.modelformset_factory(

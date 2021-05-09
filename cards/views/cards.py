@@ -41,7 +41,10 @@ class CardAddView(LoginRequiredMixin, FormView):
         return context
 
     def form_valid(self, form):
-        card = Card(**form.cleaned_data)
+        course = Course.objects.get(
+            id=self.request.GET.get('course')
+        )
+        card = Card(course=course, **form.cleaned_data)
         card.save()
         return super().form_valid(form)
 
